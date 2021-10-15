@@ -11,7 +11,7 @@ class Twod extends React.Component {
             endidx: [10, 10],
             isvisited: [],
             finalcolor: 0,
-            isvisitedDup: [],
+            danger: [],
         }
     }
 
@@ -39,7 +39,7 @@ class Twod extends React.Component {
 
         }
         this.setState({ grid: final, finalcolor: 0 });
-        this.setState({ isvisited: finalsetgrid, isvisitedDup: finalsetgrid });
+        this.setState({ isvisited: finalsetgrid, danger: finalsetgrid });
         console.log(this.state.isvisited);
         console.log(finalsetgrid);
     }
@@ -65,7 +65,8 @@ class Twod extends React.Component {
         const pass = this.state.isvisited;
         const val1 = this.state.startidx;
         const val2 = this.state.endidx;
-        const curr = algo.Breadthsearch(pass, val1, val2);
+        const danger = this.state.danger;
+        const curr = algo.Breadthsearch(pass, val1, val2, danger);
         for (let i = 0; i < curr.length; i++) {
             await this.calls(curr, i, empty);
         }
@@ -103,6 +104,12 @@ class Twod extends React.Component {
         await this.reset();
         console.log(this.state.startidx, this.state.endidx);
     }
+    block = (x, y) => {
+        const temp = [x, y];
+        const dangercurr = this.state.danger;
+        dangercurr[x][y] = -1;
+        this.setState({ danger: dangercurr });
+    }
     render() {
         const grid = this.state.grid;
         return (
@@ -126,13 +133,13 @@ class Twod extends React.Component {
                                     else {
                                         if (this.state.isvisited[party.x][party.y] === 1) {
                                             if (this.state.finalcolor === 0)
-                                                return <div className='box visited' key={idxx}></div>
+                                                return <div className='box visited' key={idxx} ></div>
                                             else {
                                                 return <div className='box visited2' key={idxx}></div>
                                             }
                                         }
                                         else
-                                            return <div className='box' key={idxx}></div>
+                                            return <div className={`box ${this.state.danger[party.x][party.y] === -1 ? 'blocked' : ''}`} onClick={() => this.block(party.x, party.y)} key={idxx}></div>
                                     }
                                 })
                             }

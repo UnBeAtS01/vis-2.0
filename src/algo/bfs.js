@@ -1,10 +1,9 @@
 const row = [-1, 0, 1, 0];
 const col = [0, 1, 0, -1];
 
-export const Breadthsearch = (pass, start, end) => {
+export const Breadthsearch = (pass, start, end, danger) => {
     console.log(pass);
     const name = pass;
-    //console.log(name);
     const currs = [];
     const temp = [start[0], start[1]];
     const final2darray = [];
@@ -24,11 +23,13 @@ export const Breadthsearch = (pass, start, end) => {
                 console.log('exit');
                 return final2darray;
             }
-            if (X >= 0 && X < 20 && Y >= 0 && Y < 50 && name[X][Y] === 0) {
+            if (X >= 0 && X < 20 && Y >= 0 && Y < 50 && name[X][Y] === 0 && danger[X][Y] != -1) {
+
                 const temp3 = [X, Y];
                 currs.push(temp3);
                 final2darray.push(temp3);
                 name[X][Y] = 1;
+
             }
         }
     }
