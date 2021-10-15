@@ -12,6 +12,7 @@ class Twod extends React.Component {
             isvisited: [],
             finalcolor: 0,
             danger: [],
+            speed: 100,
         }
     }
 
@@ -21,7 +22,7 @@ class Twod extends React.Component {
         for (let i = 0; i < 20; i++) {
             const curr = [];
             const setgrid = [];
-            for (let j = 0; j < 50; j++) {
+            for (let j = 0; j < 40; j++) {
 
                 const val = { x: i, y: j, isstart: 0, isend: 0 };
                 if (i === this.state.startidx[0] && j === this.state.startidx[1]) {
@@ -50,7 +51,7 @@ class Twod extends React.Component {
         setTimeout(() => {
             pass[curr[i][0]][curr[i][1]] = 1;
             this.setState({ isvisited: pass });
-        }, (i + 1) * 100);
+        }, (i + 1) * this.state.speed);
     }
     bfs = async () => {
         let empty = [];
@@ -72,7 +73,7 @@ class Twod extends React.Component {
         }
         setTimeout(() => {
             this.setState({ finalcolor: 1 })
-        }, 100 * (curr.length + 1));
+        }, this.state.speed * (curr.length + 1));
     }
     setstartX = async (e) => {
         const val = parseInt(e.target.value);
@@ -107,16 +108,22 @@ class Twod extends React.Component {
     block = (x, y) => {
         const temp = [x, y];
         const dangercurr = this.state.danger;
-        dangercurr[x][y] = -1;
+        if (dangercurr[x][y] != -1)
+            dangercurr[x][y] = -1;
+        else
+            dangercurr[x][y] = 0;
         this.setState({ danger: dangercurr });
+    }
+    setSpeed = (e) => {
+        const val = e.target.value;
+        this.setState({ speed: val });
     }
     render() {
         const grid = this.state.grid;
         return (
             <div >
-                <Header Bfs={this.bfs} setstartX={this.setstartX} setstartY={this.setstartY} setendX={this.setendX} setendY={this.setendY} startidx={this.state.startidx} endidx={this.state.endidx} />
-                {//console.log(this.state.isvisited)
-                }
+                <Header reset={this.reset} speed={this.state.speed} setSpeed={this.setSpeed} Bfs={this.bfs} setstartX={this.setstartX} setstartY={this.setstartY} setendX={this.setendX} setendY={this.setendY} startidx={this.state.startidx} endidx={this.state.endidx} />
+
                 <div>{
                     grid.map((ele, idx) => {
                         //console.log(ele)

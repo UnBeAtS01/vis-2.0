@@ -11,6 +11,8 @@ class Header extends React.Component {
                     <input type='number' value={this.props.startidx[1]} onChange={this.props.setstartY} /></div>
                 <div>end: <input type='number' value={this.props.endidx[0]} onChange={this.props.setendX} />
                     <input type='number' value={this.props.endidx[1]} onChange={this.props.setendY} /></div>
+                <input type='number' value={this.props.speed} onChange={this.props.setSpeed} />
+                <button onClick={this.props.reset}>Re-set</button>
             </div>
         )
     }
