@@ -7,6 +7,7 @@ class Header extends React.Component {
         return (
             <div>
                 <button onClick={() => this.props.Bfs()}>BFS</button>
+                <button onClick={() => this.props.Dfs()}>Dfs</button>
                 <div> start: <input type='number' value={this.props.startidx[0]} onChange={this.props.setstartX} />
                     <input type='number' value={this.props.startidx[1]} onChange={this.props.setstartY} /></div>
                 <div>end: <input type='number' value={this.props.endidx[0]} onChange={this.props.setendX} />

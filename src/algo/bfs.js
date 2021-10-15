@@ -23,7 +23,7 @@ export const Breadthsearch = (pass, start, end, danger) => {
                 console.log('exit');
                 return final2darray;
             }
-            if (X >= 0 && X < 20 && Y >= 0 && Y < 50 && name[X][Y] === 0 && danger[X][Y] != -1) {
+            if (X >= 0 && X < 20 && Y >= 0 && Y < 50 && name[X][Y] === 0 && danger[X][Y] !== -1) {
 
                 const temp3 = [X, Y];
                 currs.push(temp3);
@@ -34,5 +34,46 @@ export const Breadthsearch = (pass, start, end, danger) => {
         }
     }
     //console.log('idhar');
+    return final2darray;
+}
+let flag = 0;
+const solve = (name, curr, end, danger, final2darray) => {
+    if (flag == 1) return;
+    for (let i = 0; i < 4; i++) {
+        let X = curr[0] + row[i];
+        let Y = curr[1] + col[i];
+        if (X === end[0] && Y === end[1]) {
+            console.log('exit');
+            flag = 1;
+            return;
+        }
+        if (X >= 0 && Y >= 0 && X < 20 && Y < 50 && name[X][Y] === 0 && danger[X][Y] !== -1) {
+            const temp3 = [X, Y];
+            final2darray.push(temp3);
+            name[X][Y] = 1;
+            solve(name, temp3, end, danger, final2darray);
+        }
+
+    }
+}
+export const Depthsearch = (pass, start, end, danger) => {
+    const name = pass;
+    flag = 0;
+    const final2darray = [];
+    for (let i = 0; i < 4; i++) {
+        let X = start[0] + row[i];
+        let Y = start[1] + col[i];
+        if (X === end[0] && Y === end[1]) {
+            console.log('exit');
+            return final2darray;
+        }
+        if (X >= 0 && Y >= 0 && X < 20 && Y < 50 && name[X][Y] === 0 && danger[X][Y] !== -1) {
+            const temp3 = [X, Y];
+            final2darray.push(temp3);
+            name[X][Y] = 1;
+            solve(name, temp3, end, danger, final2darray);
+        }
+
+    }
     return final2darray;
 }

@@ -75,6 +75,28 @@ class Twod extends React.Component {
             this.setState({ finalcolor: 1 })
         }, this.state.speed * (curr.length + 1));
     }
+    dfs = async () => {
+        let empty = [];
+        for (let i = 0; i < 20; i++) {
+            const temp = [];
+            for (let j = 0; j < 50; j++) {
+                temp.push(0);
+            }
+            empty.push(temp);
+        }
+
+        const pass = this.state.isvisited;
+        const val1 = this.state.startidx;
+        const val2 = this.state.endidx;
+        const danger = this.state.danger;
+        const curr = algo.Depthsearch(pass, val1, val2, danger);
+        for (let i = 0; i < curr.length; i++) {
+            await this.calls(curr, i, empty);
+        }
+        setTimeout(() => {
+            this.setState({ finalcolor: 1 })
+        }, this.state.speed * (curr.length + 1));
+    }
     setstartX = async (e) => {
         const val = parseInt(e.target.value);
         console.log(val);
@@ -122,7 +144,7 @@ class Twod extends React.Component {
         const grid = this.state.grid;
         return (
             <div >
-                <Header reset={this.reset} speed={this.state.speed} setSpeed={this.setSpeed} Bfs={this.bfs} setstartX={this.setstartX} setstartY={this.setstartY} setendX={this.setendX} setendY={this.setendY} startidx={this.state.startidx} endidx={this.state.endidx} />
+                <Header reset={this.reset} Dfs={this.dfs} speed={this.state.speed} setSpeed={this.setSpeed} Bfs={this.bfs} setstartX={this.setstartX} setstartY={this.setstartY} setendX={this.setendX} setendY={this.setendY} startidx={this.state.startidx} endidx={this.state.endidx} />
 
                 <div>{
                     grid.map((ele, idx) => {
