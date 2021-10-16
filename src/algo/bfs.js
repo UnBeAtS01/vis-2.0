@@ -38,7 +38,7 @@ export const Breadthsearch = (pass, start, end, danger) => {
 }
 let flag = 0;
 const solve = (name, curr, end, danger, final2darray) => {
-    if (flag == 1) return;
+    if (flag === 1) return;
     for (let i = 0; i < 4; i++) {
         let X = curr[0] + row[i];
         let Y = curr[1] + col[i];

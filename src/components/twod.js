@@ -12,7 +12,7 @@ class Twod extends React.Component {
             isvisited: [],
             finalcolor: 0,
             danger: [],
-            speed: 100,
+            speed: 10,
             flag: 0,
             firstclick: 0
         }
@@ -143,7 +143,7 @@ class Twod extends React.Component {
 
     }*/
     blockmovedown = (x, y) => {
-        const temp = [x, y];
+
         const dangercurr = this.state.danger;
         this.setState({ firstclick: 1 });
         if (dangercurr[x][y] === 0) {

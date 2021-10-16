@@ -1,19 +1,21 @@
 import React from 'react';
+import './header.scss';
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+
     render() {
         return (
-            <div>
-                <button onClick={() => this.props.Bfs()}>BFS</button>
-                <button onClick={() => this.props.Dfs()}>Dfs</button>
-                <div> start: <input type='number' value={this.props.startidx[0]} onChange={this.props.setstartX} />
-                    <input type='number' value={this.props.startidx[1]} onChange={this.props.setstartY} /></div>
-                <div>end: <input type='number' value={this.props.endidx[0]} onChange={this.props.setendX} />
-                    <input type='number' value={this.props.endidx[1]} onChange={this.props.setendY} /></div>
-                <input type='number' value={this.props.speed} onChange={this.props.setSpeed} />
-                <button onClick={this.props.reset}>Re-set</button>
+            <div className="Nav-bar">
+                <div className='rearrange'>   <div> start(x,y): <input type='number' value={this.props.startidx[0]} onChange={this.props.setstartX} />
+                    <input className='spacebar' type='number' value={this.props.startidx[1]} onChange={this.props.setstartY} /></div>
+                    <div>end(x,y): <input className='spacebar' type='number' value={this.props.endidx[0]} onChange={this.props.setendX} />
+                        <input className='spacebar' type='number' value={this.props.endidx[1]} onChange={this.props.setendY} /></div>
+                    <div>speed(ms): <input className='spacebar' type='number' value={this.props.speed} onChange={this.props.setSpeed} /></div>  </div>
+
+                <div className='sorting'>  <button className='buttons' onClick={this.props.reset}>Re-set</button>
+                    <button className='buttons' onClick={() => this.props.Bfs()}>BFS</button>
+                    <button className='buttons' onClick={() => this.props.Dfs()}>Dfs</button>
+                </div>
+
             </div>
         )
     }
