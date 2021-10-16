@@ -13,6 +13,8 @@ class Twod extends React.Component {
             finalcolor: 0,
             danger: [],
             speed: 100,
+            flag: 0,
+            firstclick: 0
         }
     }
 
@@ -40,7 +42,7 @@ class Twod extends React.Component {
 
         }
         this.setState({ grid: final, finalcolor: 0 });
-        this.setState({ isvisited: finalsetgrid, danger: finalsetgrid });
+        this.setState({ isvisited: finalsetgrid, danger: finalsetgrid, flag: 0 });
         console.log(this.state.isvisited);
         console.log(finalsetgrid);
     }
@@ -105,6 +107,7 @@ class Twod extends React.Component {
         await this.reset();
         console.log(this.state.startidx, this.state.endidx);
 
+
     }
     setstartY = async (e) => {
         const val = parseInt(e.target.value);
@@ -127,14 +130,49 @@ class Twod extends React.Component {
         await this.reset();
         console.log(this.state.startidx, this.state.endidx);
     }
-    block = (x, y) => {
+    /*blockclick = (x, y) => {
         const temp = [x, y];
         const dangercurr = this.state.danger;
-        if (dangercurr[x][y] != -1)
+        if (dangercurr[x][y] === 0) {
             dangercurr[x][y] = -1;
+
+        }
         else
             dangercurr[x][y] = 0;
         this.setState({ danger: dangercurr });
+
+    }*/
+    blockmovedown = (x, y) => {
+        const temp = [x, y];
+        const dangercurr = this.state.danger;
+        this.setState({ firstclick: 1 });
+        if (dangercurr[x][y] === 0) {
+            dangercurr[x][y] = -1;
+            this.setState({ danger: dangercurr, flag: 1 });
+        }
+        else {
+            dangercurr[x][y] = 0;
+            this.setState({ danger: dangercurr, flag: 0 });
+        }
+    }
+    blockmove = (x, y) => {
+        if (this.state.firstclick === 0) return;
+        const dangercurr = this.state.danger;
+        if (this.state.flag === 1) {
+            dangercurr[x][y] = -1;
+        }
+        else {
+            dangercurr[x][y] = 0;
+        }
+        this.setState({ danger: dangercurr });
+    }
+    blockmoveup = (x, y) => {
+
+
+        this.setState({ flag: 0, firstclick: 0 });
+
+
+
     }
     setSpeed = (e) => {
         const val = e.target.value;
@@ -168,7 +206,7 @@ class Twod extends React.Component {
                                             }
                                         }
                                         else
-                                            return <div className={`box ${this.state.danger[party.x][party.y] === -1 ? 'blocked' : ''}`} onClick={() => this.block(party.x, party.y)} key={idxx}></div>
+                                            return <div className={`box ${this.state.danger[party.x][party.y] === -1 ? 'blocked' : ''}`} onMouseDownCapture={() => { this.blockmovedown(party.x, party.y) }} onMouseMove={() => { this.blockmove(party.x, party.y) }} onMouseUpCapture={() => { this.blockmoveup(party.x, party.y) }} key={idxx}></div>
                                     }
                                 })
                             }
