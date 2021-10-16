@@ -40,14 +40,18 @@ class Twod extends React.Component {
             final.push(curr);
             finalsetgrid.push(setgrid);
 
+
         }
         this.setState({ grid: final, finalcolor: 0 });
         this.setState({ isvisited: finalsetgrid, danger: finalsetgrid, flag: 0 });
         console.log(this.state.isvisited);
         console.log(finalsetgrid);
+        alert("****you can draw walls by Mouse****");
+
     }
     componentDidMount() {
         this.reset();
+
     }
     calls = async (curr, i, pass) => {
         setTimeout(() => {
@@ -74,8 +78,19 @@ class Twod extends React.Component {
             await this.calls(curr, i, empty);
         }
         setTimeout(() => {
-            this.setState({ finalcolor: 1 })
+            this.setState({ finalcolor: 1 });
+            let n = curr.length;
+            console.log(curr[n - 1][0], curr[n - 1][1]);
+            if (curr[n - 1][0] === this.state.endidx[0] && curr[n - 1][1] === this.state.endidx[1]) {
+
+                alert("Found :)");
+            }
+            else {
+                alert("NOT POSSIBLE TO REACH :')");
+            }
+
         }, this.state.speed * (curr.length + 1));
+
     }
     dfs = async () => {
         let empty = [];
@@ -96,8 +111,19 @@ class Twod extends React.Component {
             await this.calls(curr, i, empty);
         }
         setTimeout(() => {
-            this.setState({ finalcolor: 1 })
+            this.setState({ finalcolor: 1 });
+            let n = curr.length;
+            console.log(curr[n - 1][0], curr[n - 1][1]);
+            if (curr[n - 1][0] === this.state.endidx[0] && curr[n - 1][1] === this.state.endidx[1]) {
+
+                alert("Found :)");
+            }
+            else {
+                alert("NOT POSSIBLE TO REACH :')");
+            }
+
         }, this.state.speed * (curr.length + 1));
+
     }
     setstartX = async (e) => {
         const val = parseInt(e.target.value);
