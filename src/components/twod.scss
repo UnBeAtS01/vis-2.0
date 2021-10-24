@@ -17,11 +17,17 @@ cursor:default;
     border-radius: 50%;
 }
 .visited{
-    background-color:rgb(117, 0, 117);
+    background-color:rgb(144, 173, 255);
 }
 .visited2{
-    background-color: rgb(80, 119, 182);
+    background-color: rgb(154, 111, 255);
 }
 .blocked{
     background-color: yellowgreen;
+}
+.blockedTwenty{
+    background-color: rgb(255, 60, 0);
+}
+.blockedFive{
+    background-color: rgb(255, 174, 0);
 }

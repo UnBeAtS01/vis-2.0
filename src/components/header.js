@@ -14,6 +14,14 @@ class Header extends React.Component {
                 <div className='sorting'>  <button className='buttons' onClick={this.props.reset}>Re-set</button>
                     <button className='buttons' onClick={() => this.props.Bfs()}>BFS</button>
                     <button className='buttons' onClick={() => this.props.Dfs()}>Dfs</button>
+                    <div className='dijikstra'>
+                        <button className='buttons' onClick={() => this.props.Dijikstra()}>Dijikstra</button>
+                        <div className='cost-blocks'>
+                            <button className={`weightb ${this.props.fiveon ? 'lightup' : ''}`} onClick={() => this.props.selected5()}>5</button>
+                            <button className={`weightb ${this.props.twentyon ? 'lightup' : ''}`} onClick={() => this.props.selected20()}>20</button>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
