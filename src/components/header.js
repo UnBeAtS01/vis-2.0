@@ -11,7 +11,7 @@ class Header extends React.Component {
                         <input className='spacebar' type='number' value={this.props.endidx[1]} onChange={this.props.setendY} /></div>
                     <div>speed(ms): <input className='spacebar' type='number' value={this.props.speed} onChange={this.props.setSpeed} /></div>  </div>
 
-                <div className='sorting'>  <button className='buttons' onClick={this.props.reset}>Re-set</button>
+                <div className='sorting'>  <button className='buttons' onClick={this.props.reset}>Re-set/(know more)</button>
                     <button className='buttons' onClick={() => this.props.Bfs()}>BFS</button>
                     <button className='buttons' onClick={() => this.props.Dfs()}>Dfs</button>
                     <div className='dijikstra'>

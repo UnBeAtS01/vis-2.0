@@ -91,7 +91,7 @@ function compare(a, b) {
 
     return a[0] - b[0];
 }
-export const shortestPath = (pass, start, end, danger, fivewala, twentywala, minDist) => {
+export const shortestPath = (pass, start, end, danger, fivewala, twentywala, minDist, parents) => {
     minDist[start[0]][start[1]] = 0;
     const visits = pass;
     const currs = [];
@@ -132,6 +132,7 @@ export const shortestPath = (pass, start, end, danger, fivewala, twentywala, min
 
                 if (minDist[X][Y] > now[0] + weight) {
                     minDist[X][Y] = now[0] + weight;
+                    parents[X][Y] = [now[1], now[2]];
                     const temp3 = [minDist[X][Y], X, Y];
                     currs.push(temp3);
                 }

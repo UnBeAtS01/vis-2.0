@@ -2,6 +2,7 @@ import React from 'react';
 import './twod.scss';
 import Header from './header';
 import * as algo from '../algo/bfs.js';
+import toast, { Toaster } from 'react-hot-toast';
 class Twod extends React.Component {
     constructor(props) {
         super(props);
@@ -19,20 +20,34 @@ class Twod extends React.Component {
             firstclick: 0,
             cost5: 0,
             cos20: 0,
-
+            parents: [],
+            finalpath: [],
         }
     }
 
     reset = () => {
+        toast.success('You can draw walls using left click of a mouse.', {
+            duration: 4000,
+            position: 'top-center',
+        });
+        toast.success('You can also put weights for minpath algo and draw weight using left click of a mouse.', {
+            duration: 4000,
+            position: 'top-center',
+        });
+
         const final = [];
         const finalsetgrid = [];
         const finalsetgrid2 = [];
         const finalsetgrid3 = [];
+        const finalsetgrid4 = [];
+        const parents = [];
         for (let i = 0; i < 20; i++) {
             const curr = [];
             const setgrid = [];
             const setgrid2 = [];
             const setgrid3 = [];
+            const setgrid4 = [];
+            const setparent = [];
             for (let j = 0; j < 40; j++) {
 
                 const val = { x: i, y: j, isstart: 0, isend: 0 };
@@ -46,24 +61,27 @@ class Twod extends React.Component {
                 setgrid.push(0);
                 setgrid2.push(0);
                 setgrid3.push(0);
+                setgrid4.push(0);
+                setparent.push([- 1, -1]);
             }
 
             final.push(curr);
             finalsetgrid.push(setgrid);
             finalsetgrid2.push(setgrid2);
             finalsetgrid3.push(setgrid3);
+            finalsetgrid4.push(setgrid4);
+            parents.push(setparent);
 
         }
         this.setState({ grid: final, finalcolor: 0, cost20: 0, cost5: 0 });
-        this.setState({ isvisited: finalsetgrid, danger: finalsetgrid, flag: 0, Fivewala: finalsetgrid2, Twentywala: finalsetgrid3 });
+        this.setState({ isvisited: finalsetgrid, danger: finalsetgrid, flag: 0, Fivewala: finalsetgrid2, Twentywala: finalsetgrid3, parents: parents, finalpath: finalsetgrid4 });
         console.log(this.state.isvisited);
         console.log(finalsetgrid);
-
 
     }
     componentDidMount() {
         this.reset();
-        alert("****you can draw walls by Mouse****");
+
 
     }
     calls = async (curr, i, pass) => {
@@ -96,10 +114,16 @@ class Twod extends React.Component {
             console.log(curr[n - 1][0], curr[n - 1][1]);
             if (curr[n - 1][0] === this.state.endidx[0] && curr[n - 1][1] === this.state.endidx[1]) {
 
-                alert("Found :)");
+                toast.success("Found :)", {
+                    duration: 4000,
+                    position: 'top-center',
+                });
             }
             else {
-                alert("NOT POSSIBLE TO REACH :')");
+                toast.error("NOT POSSIBLE TO REACH :')", {
+                    duration: 4000,
+                    position: 'top-center',
+                });
             }
 
         }, this.state.speed * (curr.length + 1));
@@ -129,10 +153,16 @@ class Twod extends React.Component {
             console.log(curr[n - 1][0], curr[n - 1][1]);
             if (curr[n - 1][0] === this.state.endidx[0] && curr[n - 1][1] === this.state.endidx[1]) {
 
-                alert("Found :)");
+                toast.success("Found :)", {
+                    duration: 4000,
+                    position: 'top-center',
+                });
             }
             else {
-                alert("NOT POSSIBLE TO REACH :')");
+                toast.error("NOT POSSIBLE TO REACH :')", {
+                    duration: 4000,
+                    position: 'top-center',
+                });
             }
 
         }, this.state.speed * (curr.length + 1));
@@ -161,24 +191,43 @@ class Twod extends React.Component {
         const danger = this.state.danger;
         const fivewala = this.state.Fivewala;
         const twentywala = this.state.Twentywala;
-        const curr = algo.shortestPath(pass, val1, val2, danger, fivewala, twentywala, minDist);
+        const parents = this.state.parents;
+        const curr = algo.shortestPath(pass, val1, val2, danger, fivewala, twentywala, minDist, parents);
         console.log(minDist);
         for (let i = 0; i < curr.length; i++) {
             await this.calls(curr, i, empty);
         }
+        let currx = this.state.endidx[0];
+        let curry = this.state.endidx[1];
+        const finalpath = this.state.finalpath;
+        while (parents[currx][curry] !== [-1, -1] && !(currx === this.state.startidx[0] && curry === this.state.startidx[1])) {
+            finalpath[currx][curry] = 1;
+            const tempx = parents[currx][curry][0];
+            const tempy = parents[currx][curry][1];
+            currx = tempx;
+            curry = tempy;
+        }
+
         setTimeout(() => {
-            this.setState({ finalcolor: 1 });
+            this.setState({ finalcolor: 1, finalpath: finalpath });
             let n = curr.length;
             console.log(curr[n - 1][0], curr[n - 1][1]);
             if (curr[n - 1][0] === this.state.endidx[0] && curr[n - 1][1] === this.state.endidx[1]) {
 
-                alert("Founded with minpath length:" + minDist[curr[n - 1][0]][curr[n - 1][1]]);
+                toast.success("Founded with minpath length:" + minDist[curr[n - 1][0]][curr[n - 1][1]], {
+                    duration: 4000,
+                    position: 'top-center',
+                });
+
             }
             else {
-                alert("NOT POSSIBLE TO REACH :')");
+                toast.error("NOT POSSIBLE TO REACH :')", {
+                    duration: 4000,
+                    position: 'top-center',
+                });
             }
 
-        }, this.state.speed * (curr.length + 1));
+        }, this.state.speed * (curr.length + 2));
     }
     setstartX = async (e) => {
         const val = parseInt(e.target.value);
@@ -307,6 +356,8 @@ class Twod extends React.Component {
                                             if (this.state.finalcolor === 0)
                                                 return <div className='box visited' key={idxx} ></div>
                                             else {
+                                                if (this.state.finalpath[party.x][party.y] === 1)
+                                                    return <div className='box visited3' key={idxx}></div>
                                                 return <div className='box visited2' key={idxx}></div>
                                             }
                                         }
@@ -344,6 +395,7 @@ class Twod extends React.Component {
                         </div>
 
                     })}</div>
+                <Toaster />
             </div>
 
 
