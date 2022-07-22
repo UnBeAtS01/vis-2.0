@@ -234,7 +234,7 @@ class Twod extends React.Component {
         console.log(val);
         const prev = this.state.startidx;
         await this.setState({ startidx: [parseInt(val), prev[1]] });
-        //await this.reset();
+        await this.reset();
         console.log(this.state.startidx, this.state.endidx);
 
 
@@ -243,21 +243,21 @@ class Twod extends React.Component {
         const val = parseInt(e.target.value);
         const prev = this.state.startidx;
         await this.setState({ startidx: [prev[0], val] });
-        //await this.reset();
+        await this.reset();
         console.log(this.state.startidx, this.state.endidx);
     }
     setendY = async (e) => {
         const val = parseInt(e.target.value);
         const prev = this.state.endidx;
         await this.setState({ endidx: [prev[0], val] });
-        //await this.reset();
+       await this.reset();
         console.log(this.state.startidx, this.state.endidx);
     }
     setendX = async (e) => {
         const val = parseInt(e.target.value);
         const prev = this.state.endidx;
         await this.setState({ endidx: [val, prev[1]] });
-       // await this.reset();
+       await this.reset();
         console.log(this.state.startidx, this.state.endidx);
     }
 
